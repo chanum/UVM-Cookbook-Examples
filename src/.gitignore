@@ -1,0 +1,11 @@
+# Modelsim/Questasim ignored files
+work
+*.wlf
+wlf*
+vsim*
+_*
+*.code-workspace
+*.ini
+transcript*
+VRMDATA
+vrmhtmlreport
