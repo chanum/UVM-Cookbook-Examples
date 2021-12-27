@@ -3,12 +3,10 @@
 # IMPORTANT set UVM path!
 set UVM_LIB    C:/fpga/questasim64_10.7c/uvm-1.2
 
-set RTL        ../../../rtl
-set AGENTS     ../../../agents
-set UTILS      ../../../utils
-set TAR_PATH   ../../../../
+set RTL        ../../../../rtl
+set AGENTS     ../../../../vip/agents
+set UTILS      ../../../../vip/utils
 set TEST       spi_interrupt_test
-
 
 quit -sim
 catch {file delete -force work}
