@@ -16,23 +16,11 @@
 //   the License for the specific language governing
 //   permissions and limitations under the License.
 //------------------------------------------------------------
-//
-// Class Description:
-//
-//
-class spi_test_base extends uvm_test;
 
+class spi_test_base extends uvm_test;
   // UVM Factory Registration Macro
-  //
   `uvm_component_utils(spi_test_base)
 
-  //------------------------------------------
-  // Data Members
-  //------------------------------------------
-
-  //------------------------------------------
-  // Component Members
-  //------------------------------------------
   // The environment class
   spi_env m_env;
   // Configuration objects
@@ -41,12 +29,9 @@ class spi_test_base extends uvm_test;
   spi_agent_config m_spi_cfg;
   // Register map
   spi_reg_block spi_rb;
-  //Interrupt Utility
+  // Interrupt Utility
   intr_util INTR;
 
-  //------------------------------------------
-  // Methods
-  //------------------------------------------
   extern virtual function void configure_apb_agent(apb_agent_config cfg);
   // Standard UVM Methods:
   extern function new(string name = "spi_test_base", uvm_component parent = null);
@@ -96,7 +81,7 @@ function void spi_test_base::build_phase(uvm_phase phase);
     `uvm_fatal("VIF CONFIG", "Cannot get() interface INTR_bfm from uvm_config_db. Have you set() it?")
   INTR.set_bfm(temp_intr_bfm);
   m_env_cfg.INTR = INTR;
-  
+
   uvm_config_db #(spi_env_config)::set(this, "*", "spi_env_config", m_env_cfg);
   m_env = spi_env::type_id::create("m_env", this);
 endfunction: build_phase

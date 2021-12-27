@@ -18,16 +18,13 @@
 //------------------------------------------------------------
 
 module hvl_top;
+  `include "timescale.v"
+  import uvm_pkg::*;
+  import spi_test_lib_pkg::*;
 
-`include "timescale.v"
-
-import uvm_pkg::*;
-import spi_test_lib_pkg::*;
-
-// UVM initial block:
-// run_test()
-initial begin
-  run_test();
-end
+  // UVM initial block:
+  initial begin
+    run_test();
+  end
 
 endmodule: hvl_top
