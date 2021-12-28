@@ -16,25 +16,16 @@
 //   the License for the specific language governing
 //   permissions and limitations under the License.
 //------------------------------------------------------------
-//
-// Class Description:
-//
-//
+
 class spi_reg_test extends spi_test_base;
-
-  // UVM Factory Registration Macro
-  //
+  // UVM Factory Registration Macro.
   `uvm_component_utils(spi_reg_test)
-
-  //------------------------------------------
-  // Methods
-  //------------------------------------------
 
   // Standard UVM Methods:
   extern function new(string name = "spi_reg_test", uvm_component parent = null);
   extern function void build_phase(uvm_phase phase);
   extern task run_phase(uvm_phase phase);
-  extern function void report_phase(uvm_phase phase);
+  // extern function void report_phase(uvm_phase phase);
 
 endclass: spi_reg_test
 
@@ -59,15 +50,15 @@ task spi_reg_test::run_phase(uvm_phase phase);
   phase.drop_objection(this, "Test Finished");
 endtask: run_phase
 
-function void spi_reg_test::report_phase(uvm_phase phase);
-      uvm_coreservice_t cs_;
-      uvm_report_server svr;
-      cs_ = uvm_coreservice_t::get();
-      svr = cs_.get_report_server();
-      
-      if ((svr.get_severity_count(UVM_ERROR) == 0) & (svr.get_id_count("uvm_reg_hw_reset_seq") == 7))
-         `uvm_info("** UVM TEST PASSED **", "No reset errors detected", UVM_LOW)
-      else
-         `uvm_error("!! UVM TEST FAILED !!", "Register reset errors detected")
+// function void spi_reg_test::report_phase(uvm_phase phase);
+//       // uvm_coreservice_t cs_;
+//       // uvm_report_server svr;
+//       // cs_ = uvm_coreservice_t::get();
+//       // svr = cs_.get_report_server();
 
-endfunction
+//       // if ((svr.get_severity_count(UVM_ERROR) == 0) & (svr.get_id_count("uvm_reg_hw_reset_seq") == 7))
+//       //    `uvm_info("** UVM TEST PASSED **", "No reset errors detected", UVM_LOW)
+//       // else
+//       //    `uvm_error("!! UVM TEST FAILED !!", "Register reset errors detected")
+
+// endfunction

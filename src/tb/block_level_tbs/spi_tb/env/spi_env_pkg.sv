@@ -23,7 +23,7 @@ package spi_env_pkg;
 
   // Standard UVM import & include:
   import uvm_pkg::*;
-`include "uvm_macros.svh"
+  `include "uvm_macros.svh"
 
   // Any further package imports:
   import apb_agent_pkg::*;
@@ -32,8 +32,8 @@ package spi_env_pkg;
   import intr_pkg::*;
 
   // Includes:
-`include "spi_env_config.svh"
-`include "spi_scoreboard.svh"
-`include "spi_env.svh"
+  `include "spi_env_config.svh"
+  `include "spi_scoreboard.svh"
+  `include "spi_env.svh"
 
 endpackage: spi_env_pkg
