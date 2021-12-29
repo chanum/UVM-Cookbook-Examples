@@ -38,8 +38,8 @@ class spi_env_config extends uvm_object;
   apb_agent_config m_apb_agent_config;
   spi_agent_config m_spi_agent_config;
 
-  // // SPI Register block
-  spi_reg_block spi_rb;
+  // SPI Register block
+  spi_reg_block m_reg_model;
 
   // Interrupt Utility - used in the wait for interrupt task
   intr_util INTR;

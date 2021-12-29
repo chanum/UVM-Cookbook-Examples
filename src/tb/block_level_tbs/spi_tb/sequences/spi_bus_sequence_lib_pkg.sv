@@ -62,7 +62,7 @@ class spi_bus_base_seq extends uvm_sequence #(uvm_sequence_item);
     if(m_cfg == null) begin
       `uvm_fatal(get_full_name(), "spi_env_config is null")
     end
-    spi_rb = m_cfg.spi_rb;
+    spi_rb = m_cfg.m_reg_model;
   endtask: body
 
 endclass: spi_bus_base_seq
@@ -314,7 +314,7 @@ class SPI_config_seq extends spi_bus_base_seq;
 //                                 spi_rb.ctrl.char_len.value inside {0, 1, [31:33], [63:65], [95:97], 126, 127};
                                  spi_rb.ctrl.char_len.value inside {[1:31]};
                                  spi_rb.ctrl.tx_neg.value == 0;
-                                 spi_rb.ctrl.rx_neg.value == 1;                                 
+                                 spi_rb.ctrl.rx_neg.value == 1;
                                  spi_rb.divider.ratio.value inside {16'h0, 16'h1, 16'h2, 16'h4, 16'h8, 16'h10, 16'h20, 16'h40, 16'h80};
                                 }) begin
       `uvm_error("body", "spi_rb randomization failure")
