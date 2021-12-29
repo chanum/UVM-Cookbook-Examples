@@ -17,30 +17,20 @@
 //   permissions and limitations under the License.
 //------------------------------------------------------------
 //
-// Class Description:
-//
-//
+
 class apb_driver extends uvm_driver #(apb_seq_item, apb_seq_item);
+  // UVM Factory Registration Macro
+  `uvm_component_utils(apb_driver)
 
-// UVM Factory Registration Macro
-//
-`uvm_component_utils(apb_driver)
+  // Virtual Interface
+  virtual apb_driver_bfm m_bfm;
 
-// Virtual Interface
-virtual apb_driver_bfm m_bfm;
+  apb_agent_config m_cfg;
 
-//------------------------------------------
-// Data Members
-//------------------------------------------
-apb_agent_config m_cfg;
-  
-//------------------------------------------
-// Methods
-//------------------------------------------
-// Standard UVM Methods:
-extern function new(string name = "apb_driver", uvm_component parent = null);
-extern task run_phase(uvm_phase phase);
-extern function void build_phase(uvm_phase phase);
+  // Standard UVM Methods:
+  extern function new(string name = "apb_driver", uvm_component parent = null);
+  extern task run_phase(uvm_phase phase);
+  extern function void build_phase(uvm_phase phase);
 
 endclass: apb_driver
 
@@ -58,7 +48,7 @@ task apb_driver::run_phase(uvm_phase phase);
   apb_seq_item req;
   apb_seq_item rsp;
   int psel_index;
-  
+
   m_bfm.m_cfg = m_cfg;
   forever
    begin

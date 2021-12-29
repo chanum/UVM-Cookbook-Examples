@@ -17,9 +17,7 @@
 //   permissions and limitations under the License.
 //------------------------------------------------------------
 //
-// Class Description:
-//
-//
+
 class spi_agent_config extends uvm_object;
   // UVM Factory Registration Macro.
   `uvm_object_utils(spi_agent_config)

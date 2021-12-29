@@ -17,35 +17,23 @@
 //   permissions and limitations under the License.
 //------------------------------------------------------------
 //
-// Class Description:
-//
-//
+
 class apb_agent extends uvm_component;
+  // UVM Factory Registration Macro
+  `uvm_component_utils(apb_agent)
 
-// UVM Factory Registration Macro
-//
-`uvm_component_utils(apb_agent)
+  apb_agent_config m_cfg;
 
-//------------------------------------------
-// Data Members
-//------------------------------------------
-apb_agent_config m_cfg;
-//------------------------------------------
-// Component Members
-//------------------------------------------
-uvm_analysis_port #(apb_seq_item) ap;
-apb_monitor   m_monitor;
-apb_sequencer m_sequencer;
-apb_driver    m_driver;
-apb_coverage_monitor m_fcov_monitor;
-//------------------------------------------
-// Methods
-//------------------------------------------
+  uvm_analysis_port #(apb_seq_item) ap;
+  apb_monitor   m_monitor;
+  apb_sequencer m_sequencer;
+  apb_driver    m_driver;
+  apb_coverage_monitor m_fcov_monitor;
 
-// Standard UVM Methods:
-extern function new(string name = "apb_agent", uvm_component parent = null);
-extern function void build_phase(uvm_phase phase);
-extern function void connect_phase(uvm_phase phase);
+  // Standard UVM Methods:
+  extern function new(string name = "apb_agent", uvm_component parent = null);
+  extern function void build_phase(uvm_phase phase);
+  extern function void connect_phase(uvm_phase phase);
 
 endclass: apb_agent
 

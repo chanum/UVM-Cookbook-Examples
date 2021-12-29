@@ -16,48 +16,30 @@
 //   the License for the specific language governing
 //   permissions and limitations under the License.
 //------------------------------------------------------------
-//
-// Class Description:
-//
-//
+
 class apb_monitor extends uvm_component;
+  // UVM Factory Registration Macro
+  `uvm_component_utils(apb_monitor);
 
-// UVM Factory Registration Macro
-//
-`uvm_component_utils(apb_monitor);
+  // Virtual Interface
+  virtual apb_monitor_bfm m_bfm;
 
-// Virtual Interface
-virtual apb_monitor_bfm m_bfm;
+  apb_agent_config m_cfg;
 
-//------------------------------------------
-// Data Members
-//------------------------------------------
-apb_agent_config m_cfg;
-  
-//------------------------------------------
-// Component Members
-//------------------------------------------
-uvm_analysis_port #(apb_seq_item) ap;
+  uvm_analysis_port #(apb_seq_item) ap;
 
-//------------------------------------------
-// Methods
-//------------------------------------------
+  // Standard UVM Methods:
+  extern function new(string name = "apb_monitor", uvm_component parent = null);
+  extern function void build_phase(uvm_phase phase);
+  extern task run_phase(uvm_phase phase);
+  extern function void report_phase(uvm_phase phase);
 
-// Standard UVM Methods:
+  // Proxy Methods:
+  extern function void notify_transaction(apb_seq_item item);
 
-extern function new(string name = "apb_monitor", uvm_component parent = null);
-extern function void build_phase(uvm_phase phase);
-extern task run_phase(uvm_phase phase);
-extern function void report_phase(uvm_phase phase);
+  // Helper Methods:
+  extern function void set_apb_index(int index = 0);
 
-// Proxy Methods:
-  
-extern function void notify_transaction(apb_seq_item item);
-  
-// Helper Methods:
-
-extern function void set_apb_index(int index = 0);
-  
 endclass: apb_monitor
 
 function apb_monitor::new(string name = "apb_monitor", uvm_component parent = null);
@@ -69,7 +51,7 @@ function void apb_monitor::build_phase(uvm_phase phase);
   m_bfm = m_cfg.mon_bfm;
   m_bfm.proxy = this;
   set_apb_index(m_cfg.apb_index);
-  
+
   ap = new("ap", this);
 endfunction: build_phase
 

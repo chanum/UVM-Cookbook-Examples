@@ -17,35 +17,16 @@
 //   permissions and limitations under the License.
 //------------------------------------------------------------
 //
-// Class Description:
-//
-//
+
 class apb_seq extends uvm_sequence #(apb_seq_item);
+  // UVM Factory Registration Macro
+  `uvm_object_utils(apb_seq)
 
-// UVM Factory Registration Macro
-//
-`uvm_object_utils(apb_seq)
+  // Standard UVM Methods:
+  extern function new(string name = "apb_seq");
+  extern task body;
 
-//------------------------------------------
-// Data Members (Outputs rand, inputs non-rand)
-//------------------------------------------
-
-
-//------------------------------------------
-// Constraints
-//------------------------------------------
-
-
-
-//------------------------------------------
-// Methods
-//------------------------------------------
-
-// Standard UVM Methods:
-extern function new(string name = "apb_seq");
-extern task body;
-
-endclass:apb_seq
+ endclass: apb_seq
 
 function apb_seq::new(string name = "apb_seq");
   super.new(name);
@@ -60,5 +41,4 @@ task apb_seq::body;
     assert(req.randomize());
     finish_item(req);
   end
-
-endtask:body
+endtask: body
