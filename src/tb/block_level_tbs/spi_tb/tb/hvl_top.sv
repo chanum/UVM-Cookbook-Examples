@@ -24,7 +24,12 @@ module hvl_top;
 
   // UVM initial block:
   initial begin
+    // Configure some simulation options.
+    uvm_top.enable_print_topology = 1;
+    uvm_top.finish_on_completion  = 0;
+    
     run_test();
+    $stop();
   end
 
 endmodule: hvl_top

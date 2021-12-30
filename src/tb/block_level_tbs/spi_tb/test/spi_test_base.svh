@@ -52,7 +52,7 @@ class spi_test_base extends uvm_test;
 
     // The SPI is not configured as such
     m_env_config.m_spi_agent_config = spi_agent_config::type_id::create("m_spi_agent_config");
-    m_env_config.m_spi_agent_config.has_functional_coverage = 0;
+    m_env_config.m_spi_agent_config.has_functional_coverage = 1;
     if (!uvm_config_db #(virtual spi_monitor_bfm)::get(this, "", "SPI_mon_bfm", m_env_config.m_spi_agent_config.mon_bfm))
       `uvm_fatal("VIF CONFIG", "Cannot get() BFM interface SPI_mon_bfm from uvm_config_db. Have you set() it?")
     if (!uvm_config_db #(virtual spi_driver_bfm) ::get(this, "", "SPI_drv_bfm", m_env_config.m_spi_agent_config.drv_bfm))
@@ -76,7 +76,7 @@ class spi_test_base extends uvm_test;
 
   function void configure_apb_agent(apb_agent_config cfg);
     cfg.active = UVM_ACTIVE;
-    cfg.has_functional_coverage = 0;
+    cfg.has_functional_coverage = 1;
     cfg.has_scoreboard = 0;
     // SPI is on select line 0 for address range 0-18h
     cfg.no_select_lines = 1;

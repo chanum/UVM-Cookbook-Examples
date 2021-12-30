@@ -34,3 +34,5 @@ vlog -incr +incdir+${UVM_LIB} -timescale 1ns/10ps +incdir+${RTL}/spi/rtl/verilog
 vlog -incr +incdir+${UVM_LIB} -timescale 1ns/10ps +incdir+${RTL}/spi/rtl/verilog ../tb/hdl_top.sv
 
 vsim -c -do "run -all" hvl_top hdl_top +UVM_TESTNAME=${TEST} -suppress 8887
+
+coverage report -detail
