@@ -24,50 +24,48 @@ class apb_monitor extends uvm_component;
   // Virtual Interface
   virtual apb_monitor_bfm m_bfm;
 
-  apb_agent_config m_cfg;
+  // Handle to the agent's configuration object.
+  apb_agent_config m_config;
 
-  uvm_analysis_port #(apb_seq_item) ap;
+  // Monitor's analysis port.
+  uvm_analysis_port #(apb_seq_item) seq_item_aport;
 
-  // Standard UVM Methods:
-  extern function new(string name = "apb_monitor", uvm_component parent = null);
-  extern function void build_phase(uvm_phase phase);
-  extern task run_phase(uvm_phase phase);
-  extern function void report_phase(uvm_phase phase);
+  // Monitor's constructor.
+  function new(string name, uvm_component parent);
+    super.new(name, parent);
+  endfunction: new
+
+  // Method used during build phase.
+  function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    seq_item_aport = new("seq_item_aport", this);
+  endfunction
+
+  // Method used during connect phase.
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    m_bfm = m_config.mon_bfm;
+    m_bfm.proxy = this;
+    set_apb_index(m_config.apb_index);
+  endfunction
+
+  // Main task executed during run phase.
+  task run_phase(uvm_phase phase);
+    m_bfm.run();
+  endtask: run_phase
+
+  function void report_phase(uvm_phase phase);
+    // Might be a good place to do some reporting on no of analysis transactions sent etc
+  endfunction: report_phase
 
   // Proxy Methods:
-  extern function void notify_transaction(apb_seq_item item);
+  function void notify_transaction(apb_seq_item item);
+    seq_item_aport.write(item);
+  endfunction
 
   // Helper Methods:
-  extern function void set_apb_index(int index = 0);
+  function void set_apb_index(int index = 0);
+    m_bfm.apb_index = index;
+  endfunction : set_apb_index
 
 endclass: apb_monitor
-
-function apb_monitor::new(string name = "apb_monitor", uvm_component parent = null);
-  super.new(name, parent);
-endfunction
-
-function void apb_monitor::build_phase(uvm_phase phase);
-  `get_config(apb_agent_config, m_cfg, "apb_agent_config")
-  m_bfm = m_cfg.mon_bfm;
-  m_bfm.proxy = this;
-  set_apb_index(m_cfg.apb_index);
-
-  ap = new("ap", this);
-endfunction: build_phase
-
-task apb_monitor::run_phase(uvm_phase phase);
-  m_bfm.run();
-endtask: run_phase
-
-function void apb_monitor::report_phase(uvm_phase phase);
-// Might be a good place to do some reporting on no of analysis transactions sent etc
-
-endfunction: report_phase
-
-function void apb_monitor::notify_transaction(apb_seq_item item);
-  ap.write(item);
-endfunction : notify_transaction
-
-function void apb_monitor::set_apb_index(int index = 0);
-  m_bfm.apb_index = index;
-endfunction : set_apb_index

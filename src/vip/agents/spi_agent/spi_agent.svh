@@ -62,7 +62,7 @@ class spi_agent extends uvm_component;
     // Link agent's configuration object to monitor's handle.
     m_monitor.m_config = m_config;
 
-    // create analysis port
+    // Create analysis port
     seq_item_aport = new("seq_item_aport", this);
   endfunction: build_phase
 

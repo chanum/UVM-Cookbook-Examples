@@ -25,37 +25,40 @@ class apb_driver extends uvm_driver #(apb_seq_item, apb_seq_item);
   // Virtual Interface
   virtual apb_driver_bfm m_bfm;
 
-  apb_agent_config m_cfg;
+  // Handle to the agent's configuration object.
+  apb_agent_config m_config;
 
-  // Standard UVM Methods:
-  extern function new(string name = "apb_driver", uvm_component parent = null);
-  extern task run_phase(uvm_phase phase);
-  extern function void build_phase(uvm_phase phase);
+  // Driver's constructor.
+  function new(string name, uvm_component parent);
+    super.new(name, parent);
+  endfunction: new
+
+   // Method used during build phase.
+  function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+  endfunction
+
+   // Method used during connect phase.
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    // Set virtual interface in configuration object.
+   m_bfm = m_config.drv_bfm;
+  endfunction
+
+  // Main task executed during run phase.
+  task run_phase(uvm_phase phase);
+    apb_seq_item req;
+    int psel_index;
+
+    m_bfm.m_config = m_config;
+    forever
+    begin
+      m_bfm.clear_sigs();
+      seq_item_port.get_next_item(req);
+      m_bfm.drive(req);
+      seq_item_port.item_done();
+    end
+  endtask: run_phase
 
 endclass: apb_driver
 
-function apb_driver::new(string name = "apb_driver", uvm_component parent = null);
-  super.new(name, parent);
-endfunction
-
-function void apb_driver::build_phase(uvm_phase phase);
-  super.build_phase(phase);
-  `get_config(apb_agent_config, m_cfg, "apb_agent_config")
-  m_bfm = m_cfg.drv_bfm;
-endfunction: build_phase
-
-task apb_driver::run_phase(uvm_phase phase);
-  apb_seq_item req;
-  apb_seq_item rsp;
-  int psel_index;
-
-  m_bfm.m_cfg = m_cfg;
-  forever
-   begin
-     m_bfm.clear_sigs();
-     seq_item_port.get_next_item(req);
-     m_bfm.drive(req);
-     seq_item_port.item_done();
-   end
-
-endtask: run_phase

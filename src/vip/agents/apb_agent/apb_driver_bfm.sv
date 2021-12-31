@@ -37,7 +37,7 @@ interface apb_driver_bfm (
   import uvm_pkg::*;
   import apb_agent_pkg::*;
 
-  apb_agent_config m_cfg;
+  apb_agent_config m_config;
 
   function void clear_sigs();
     PSEL <= 0;
@@ -74,8 +74,8 @@ interface apb_driver_bfm (
   // Looks up the address and returns PSEL line that should be activated
   // If the address is invalid, a non positive integer is returned to indicate an error
   function int sel_lookup(logic[31:0] address);
-    for(int i = 0; i < m_cfg.no_select_lines; i++) begin
-      if((address >= m_cfg.start_address[i]) && (address <= (m_cfg.start_address[i] + m_cfg.range[i]))) begin
+    for(int i = 0; i < m_config.no_select_lines; i++) begin
+      if((address >= m_config.start_address[i]) && (address <= (m_config.start_address[i] + m_config.range[i]))) begin
         return i;
       end
     end

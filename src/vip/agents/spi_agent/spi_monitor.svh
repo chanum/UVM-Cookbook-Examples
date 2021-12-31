@@ -33,28 +33,28 @@ class spi_monitor extends uvm_component;
   // Monitor's analysis port.
   uvm_analysis_port #(spi_seq_item) seq_item_aport;
 
-   // Monitor's constructor.
-    function new(string name, uvm_component parent);
-      super.new(name, parent);
-    endfunction: new
+  // Monitor's constructor.
+  function new(string name, uvm_component parent);
+    super.new(name, parent);
+  endfunction: new
 
-    // Method used during build phase.
-    function void build_phase(uvm_phase phase);
-      super.build_phase(phase);
-      seq_item_aport = new("seq_item_aport", this);
-    endfunction
+  // Method used during build phase.
+  function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    seq_item_aport = new("seq_item_aport", this);
+  endfunction
 
-    // Method used during connect phase.
-    function void connect_phase(uvm_phase phase);
-      super.connect_phase(phase);
-      m_bfm = m_config.mon_bfm;
-      m_bfm.proxy = this;
-    endfunction
+  // Method used during connect phase.
+  function void connect_phase(uvm_phase phase);
+    super.connect_phase(phase);
+    m_bfm = m_config.mon_bfm;
+    m_bfm.proxy = this;
+  endfunction
 
-    // Main task executed during run phase.
-    task run_phase(uvm_phase phase);
-      m_bfm.run();
-    endtask: run_phase
+  // Main task executed during run phase.
+  task run_phase(uvm_phase phase);
+    m_bfm.run();
+  endtask: run_phase
 
   // Proxy Methods:
   function void notify_transaction(spi_seq_item item);
@@ -62,4 +62,3 @@ class spi_monitor extends uvm_component;
   endfunction
 
 endclass: spi_monitor
-

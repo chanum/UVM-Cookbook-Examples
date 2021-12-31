@@ -41,24 +41,19 @@ class apb_coverage_monitor extends uvm_subscriber #(apb_seq_item);
 
   apb_seq_item analysis_txn;
 
-  // Standard UVM Methods:
-  extern function new(string name = "apb_coverage_monitor", uvm_component parent = null);
-  extern function void write(T t);
-  extern function void report_phase(uvm_phase phase);
+  // Monitor's constructor.
+  function new(string name, uvm_component parent);
+    super.new(name, parent);
+    apb_cov = new();
+  endfunction
+
+  function void write(T t);
+    analysis_txn = t;
+    apb_cov.sample();
+  endfunction:write
+
+  function void report_phase(uvm_phase phase);
+    // Might be a good place to do some reporting on no of analysis transactions sent etc
+  endfunction: report_phase
 
 endclass: apb_coverage_monitor
-
-function apb_coverage_monitor::new(string name = "apb_coverage_monitor", uvm_component parent = null);
-  super.new(name, parent);
-  apb_cov = new();
-endfunction
-
-function void apb_coverage_monitor::write(T t);
-  analysis_txn = t;
-  apb_cov.sample();
-endfunction:write
-
-function void apb_coverage_monitor::report_phase(uvm_phase phase);
-// Might be a good place to do some reporting on no of analysis transactions sent etc
-
-endfunction: report_phase

@@ -65,7 +65,7 @@ class spi_env extends uvm_env;
     // Create APB agent
     if (m_config.has_apb_agent) begin
       m_apb_agent = apb_agent::type_id::create("m_apb_agent", this);
-      uvm_config_db #(apb_agent_config)::set(this, "m_apb_agent", "apb_agent_config",
+      uvm_config_db #(apb_agent_config)::set(this, "m_apb_agent", "m_config",
               m_config.m_apb_agent_config);
 
       // Build the register model predictor
@@ -104,7 +104,7 @@ class spi_env extends uvm_env;
       // Set the predictor adapter
       m_apb2reg_predictor.adapter = m_reg2apb;
       // Connect the predictor to the bus agent monitor analysis port
-      m_apb_agent.ap.connect(m_apb2reg_predictor.bus_in);
+      m_apb_agent.seq_item_aport.connect(m_apb2reg_predictor.bus_in);
     end
 
     if (m_config.has_spi_scoreboard) begin
