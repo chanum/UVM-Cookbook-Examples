@@ -16,14 +16,11 @@
 //   the License for the specific language governing
 //   permissions and limitations under the License.
 //------------------------------------------------------------
-//
-// Package Description:
-//
-package spi_test_lib_pkg;
 
+package spi_test_lib_pkg;
   // Standard UVM import & include:
   import uvm_pkg::*;
-`include "uvm_macros.svh"
+  `include "uvm_macros.svh"
 
   // Any further package imports:
   import spi_env_pkg::*;
@@ -35,9 +32,9 @@ package spi_test_lib_pkg;
   import intr_pkg::*;
 
   // Includes:
-`include "spi_test_base.svh"
-`include "spi_reg_test.svh"
-`include "spi_interrupt_test.svh"
-`include "spi_poll_test.svh"
+  `include "spi_test_base.svh"
+  `include "spi_reg_test.svh"
+  `include "spi_interrupt_test.svh"
+  `include "spi_poll_test.svh"
 
 endpackage: spi_test_lib_pkg

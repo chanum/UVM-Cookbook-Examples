@@ -40,7 +40,6 @@ function void spi_reg_test::build_phase(uvm_phase phase);
 endfunction: build_phase
 
 task spi_reg_test::run_phase(uvm_phase phase);
-
   register_test_vseq t_seq =  register_test_vseq::type_id::create("t_seq");
   set_seqs(t_seq);
 

@@ -17,18 +17,10 @@
 //   permissions and limitations under the License.
 //------------------------------------------------------------
 //
-// Class Description:
-//
-//
+
 class spi_poll_test extends spi_test_base;
-
   // UVM Factory Registration Macro
-  //
   `uvm_component_utils(spi_poll_test)
-
-  //------------------------------------------
-  // Methods
-  //------------------------------------------
 
   // Standard UVM Methods:
   extern function new(string name = "spi_poll_test", uvm_component parent = null);
@@ -48,7 +40,6 @@ function void spi_poll_test::build_phase(uvm_phase phase);
 endfunction: build_phase
 
 task spi_poll_test::run_phase(uvm_phase phase);
-
   config_polling_test t_seq = config_polling_test::type_id::create("t_seq");
   set_seqs(t_seq);
 

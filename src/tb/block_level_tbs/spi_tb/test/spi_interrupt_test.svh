@@ -21,14 +21,8 @@
 //
 //
 class spi_interrupt_test extends spi_test_base;
-
   // UVM Factory Registration Macro
-  //
   `uvm_component_utils(spi_interrupt_test)
-
-  //------------------------------------------
-  // Methods
-  //------------------------------------------
 
   // Standard UVM Methods:
   extern function new(string name = "spi_interrupt_test", uvm_component parent = null);
@@ -49,7 +43,6 @@ function void spi_interrupt_test::build_phase(uvm_phase phase);
 endfunction: build_phase
 
 task spi_interrupt_test::run_phase(uvm_phase phase);
-
   config_interrupt_test t_seq = config_interrupt_test::type_id::create("t_seq");
   set_seqs(t_seq);
 
