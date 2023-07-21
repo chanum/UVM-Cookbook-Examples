@@ -67,7 +67,7 @@ function void gpio_env::build_phase(uvm_phase phase);
   if (!uvm_config_db #(gpio_env_config)::get(this, "", "gpio_env_config", m_cfg) )
     `uvm_fatal("CONFIG_LOAD", "Cannot get() configuration gpio_env_config from uvm_config_db. Have you set() it?")
   if(m_cfg.has_apb_agent) begin
-    uvm_config_db #(apb_agent_config)::set(this,"m_apb_agent*", "apb_agent_config", m_cfg.m_apb_agent_cfg);
+    uvm_config_db #(apb_agent_config)::set(this,"m_apb_agent*", "m_config", m_cfg.m_apb_agent_cfg);
     m_apb_agent = apb_agent::type_id::create("m_apb_agent", this);
     
     // Build the register model predictor
@@ -115,7 +115,7 @@ function void gpio_env::connect_phase(uvm_phase phase);
   // Disable the register models auto-prediction
   m_cfg.gpio_rb.gpio_reg_block_map.set_auto_predict(0);
   // Connect the predictor to the bus agent monitor analysis port
-  m_apb_agent.ap.connect(m_apb2reg_predictor.bus_in);
+  m_apb_agent.seq_item_aport.connect(m_apb2reg_predictor.bus_in);
   
   if(m_cfg.has_out_scoreboard) begin
     m_out_sb.gpio_rb = m_cfg.gpio_rb;

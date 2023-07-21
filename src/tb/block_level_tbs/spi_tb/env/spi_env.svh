@@ -47,7 +47,7 @@ class spi_env extends uvm_env;
 
     // Get environment configuration from database
     if (!uvm_config_db #(spi_env_config)
-        ::get(this, "", "config", m_config)) begin
+        ::get(this, "", "spi_env_config", m_config)) begin
       `uvm_fatal("SPI Env", "No config object specified!")
     end
 
