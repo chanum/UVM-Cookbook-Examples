@@ -17,20 +17,21 @@
 //   permissions and limitations under the License.
 //------------------------------------------------------------
 package spi_agent_pkg;
-  import uvm_pkg::*;
-  `include "uvm_macros.svh"
-  `include "config_macro.svh"
 
-  //import spi_register_pkg::*;
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+`include "config_macro.svh"
 
-  `include "spi_seq_item.svh"
-  `include "spi_agent_config.svh"
-  `include "spi_driver.svh"
-  `include "spi_monitor.svh"
-  typedef uvm_sequencer#(spi_seq_item) spi_sequencer;
-  `include "spi_agent.svh"
+//import spi_register_pkg::*;
 
-  // Utility Sequences
-  `include "spi_seq.svh"
+`include "spi_seq_item.svh"
+`include "spi_agent_config.svh"
+`include "spi_driver.svh"
+`include "spi_monitor.svh"
+typedef uvm_sequencer#(spi_seq_item) spi_sequencer;
+`include "spi_agent.svh"
+
+// Utility Sequences
+`include "spi_seq.svh"
 
 endpackage: spi_agent_pkg

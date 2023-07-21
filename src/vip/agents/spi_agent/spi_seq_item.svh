@@ -16,34 +16,54 @@
 //   the License for the specific language governing
 //   permissions and limitations under the License.
 //------------------------------------------------------------
+// Questa recording macro:
 
+`define uvm_record_field(NAME,VALUE) \
+   $add_attribute(recorder.get_handle(),VALUE,NAME);
 
+//
+// Class Description:
+//
+//
 class spi_seq_item extends uvm_sequence_item;
-  // UVM Factory Registration Macro.
-  `uvm_object_utils(spi_seq_item)
 
-  //------------------------------------------
-  // Data Members (Outputs rand, inputs non-rand)
-  //------------------------------------------
-  rand logic[127:0] spi_data;
-  rand bit[6:0] no_bits;
-  rand bit RX_NEG;
+// UVM Factory Registration Macro
+//
+`uvm_object_utils(spi_seq_item)
 
-  // Analysis members:
-  logic[127:0] nedge_mosi;
-  logic[127:0] pedge_mosi;
-  logic[127:0] nedge_miso;
-  logic[127:0] pedge_miso;
-  logic[7:0] cs;
+//------------------------------------------
+// Data Members (Outputs rand, inputs non-rand)
+//------------------------------------------
+rand logic[127:0] spi_data;
+rand bit[6:0] no_bits;
+rand bit RX_NEG;
 
-  // Standard UVM Methods:
-  extern function new(string name = "spi_seq_item");
-  extern function void do_copy(uvm_object rhs);
-  extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
-  extern function string convert2string();
-  extern function void do_print(uvm_printer printer);
+// Analysis members:
+logic[127:0] nedge_mosi;
+logic[127:0] pedge_mosi;
+logic[127:0] nedge_miso;
+logic[127:0] pedge_miso;
+logic[7:0] cs;
 
-endclass: spi_seq_item
+//------------------------------------------
+// Constraints
+//------------------------------------------
+
+
+
+//------------------------------------------
+// Methods
+//------------------------------------------
+
+// Standard UVM Methods:
+extern function new(string name = "spi_seq_item");
+extern function void do_copy(uvm_object rhs);
+extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
+extern function string convert2string();
+extern function void do_print(uvm_printer printer);
+extern function void do_record(uvm_recorder recorder);
+
+endclass:spi_seq_item
 
 function spi_seq_item::new(string name = "spi_seq_item");
   super.new(name);
@@ -66,7 +86,7 @@ function void spi_seq_item::do_copy(uvm_object rhs);
   pedge_miso = rhs_.pedge_miso;
   cs = rhs_.cs;
 
-endfunction: do_copy
+endfunction:do_copy
 
 function bit spi_seq_item::do_compare(uvm_object rhs, uvm_comparer comparer);
   spi_seq_item rhs_;
@@ -79,7 +99,7 @@ function bit spi_seq_item::do_compare(uvm_object rhs, uvm_comparer comparer);
          spi_data == rhs_.spi_data &&
          no_bits == rhs_.no_bits &&
          RX_NEG == rhs_.RX_NEG;
-endfunction: do_compare
+endfunction:do_compare
 
 function string spi_seq_item::convert2string();
   string s;
@@ -96,3 +116,11 @@ function void spi_seq_item::do_print(uvm_printer printer);
   printer.m_string = convert2string();
 endfunction:do_print
 
+function void spi_seq_item:: do_record(uvm_recorder recorder);
+  super.do_record(recorder);
+
+  // Use the record macros to record the item fields:
+  `uvm_record_field("spi_data", spi_data)
+  `uvm_record_field("no_bits", no_bits)
+  `uvm_record_field("RX_NEG", RX_NEG)
+endfunction:do_record

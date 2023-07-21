@@ -31,55 +31,62 @@ interface apb_driver_bfm (
   output logic        PENABLE,
   output logic        PWRITE,
   input  logic        PREADY
-  );
+);
 
-  `include "uvm_macros.svh"
-  import uvm_pkg::*;
-  import apb_agent_pkg::*;
+`include "uvm_macros.svh"
+import uvm_pkg::*;
+import apb_agent_pkg::*;
 
-  apb_agent_config m_config;
+//------------------------------------------
+// Data Members
+//------------------------------------------
+apb_agent_config m_cfg;
+//------------------------------------------
+// Methods
+//------------------------------------------
 
-  function void clear_sigs();
-    PSEL <= 0;
-    PENABLE <= 0;
-    PADDR <= 0;
-  endfunction : clear_sigs
-
-  task drive (apb_seq_item req);
-    int psel_index;
-
-    repeat(req.delay)
+function void clear_sigs();
+  PSEL <= 0;
+  PENABLE <= 0;
+  PADDR <= 0;
+endfunction : clear_sigs
+  
+task drive (apb_seq_item req);
+  int psel_index;
+  
+  repeat(req.delay)
+    @(posedge PCLK);
+  psel_index = sel_lookup(req.addr);
+  if(psel_index >= 0) begin
+    PSEL[psel_index] <= 1;
+    PADDR <= req.addr;
+    PWDATA <= req.data;
+    PWRITE <= req.we;
+    @(posedge PCLK);
+    PENABLE <= 1;
+    while (!PREADY)
       @(posedge PCLK);
-    psel_index = sel_lookup(req.addr);
-    if(psel_index >= 0) begin
-      PSEL[psel_index] <= 1;
-      PADDR <= req.addr;
-      PWDATA <= req.data;
-      PWRITE <= req.we;
-      @(posedge PCLK);
-      PENABLE <= 1;
-      while (!PREADY)
-        @(posedge PCLK);
-      if(PWRITE == 0)
-        begin
-          req.data = PRDATA;
-        end
-    end
-    else begin
-      `uvm_error("RUN", $sformatf("Access to addr %0h out of APB address range", req.addr))
-      req.error = 1;
-    end
-  endtask : drive
-
-  // Looks up the address and returns PSEL line that should be activated
-  // If the address is invalid, a non positive integer is returned to indicate an error
-  function int sel_lookup(logic[31:0] address);
-    for(int i = 0; i < m_config.no_select_lines; i++) begin
-      if((address >= m_config.start_address[i]) && (address <= (m_config.start_address[i] + m_config.range[i]))) begin
-        return i;
+    if(PWRITE == 0)
+      begin
+        req.data = PRDATA;
       end
-    end
-    return -1; // Error: Address not found
-  endfunction: sel_lookup
+  end
+  else begin
+    `uvm_error("RUN", $sformatf("Access to addr %0h out of APB address range", req.addr))
+    req.error = 1;
+  end
+endtask : drive
 
+// Looks up the address and returns PSEL line that should be activated
+// If the address is invalid, a non positive integer is returned to indicate an error
+function int sel_lookup(logic[31:0] address);
+  for(int i = 0; i < m_cfg.no_select_lines; i++) begin
+    if((address >= m_cfg.start_address[i]) && (address <= (m_cfg.start_address[i] + m_cfg.range[i]))) begin
+      return i;
+    end
+  end
+  return -1; // Error: Address not found
+endfunction: sel_lookup
+  
 endinterface: apb_driver_bfm
+

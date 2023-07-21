@@ -17,27 +17,55 @@
 //   permissions and limitations under the License.
 //------------------------------------------------------------
 //
-
+// Class Description:
+//
+//
 class spi_agent_config extends uvm_object;
-  // UVM Factory Registration Macro.
-  `uvm_object_utils(spi_agent_config)
 
-  localparam string s_my_config_id = "spi_agent_config";
-  localparam string s_no_config_id = "no config";
-  localparam string s_my_config_type_error_id = "config type error";
+localparam string s_my_config_id = "spi_agent_config";
+localparam string s_no_config_id = "no config";
+localparam string s_my_config_type_error_id = "config type error";
 
-  // BFM Virtual Interfaces
-  virtual spi_monitor_bfm mon_bfm;
-  virtual spi_driver_bfm  drv_bfm;
+// UVM Factory Registration Macro
+//
+`uvm_object_utils(spi_agent_config)
 
-  // Variable used to store the agent's activation status.
-  uvm_active_passive_enum active = UVM_ACTIVE;
+// BFM Virtual Interfaces
+virtual spi_monitor_bfm mon_bfm;
+virtual spi_driver_bfm  drv_bfm;
 
-  bit has_functional_coverage = 0;
+//------------------------------------------
+// Data Members
+//------------------------------------------
+// Is the agent active or passive
+uvm_active_passive_enum active = UVM_ACTIVE;
+bit has_functional_coverage = 0;
 
-  // Standard constructor for a config object, transaction, or sequence.
-  function new (string name = "spi_agent_config");
-    super.new(name);
-  endfunction: new
+//------------------------------------------
+// Methods
+//------------------------------------------
+extern static function spi_agent_config get_config( uvm_component c);
+// Standard UVM Methods:
+extern function new(string name = "spi_agent_config");
 
 endclass: spi_agent_config
+
+function spi_agent_config::new(string name = "spi_agent_config");
+  super.new(name);
+endfunction
+
+//
+// Function: get_config
+//
+// This method gets the my_config associated with component c. We check for
+// the two kinds of error which may occur with this kind of
+// operation.
+//
+function spi_agent_config spi_agent_config::get_config( uvm_component c );
+  spi_agent_config t;
+
+  if (!uvm_config_db #(spi_agent_config)::get(c, "", s_my_config_id, t) )
+     `uvm_fatal("CONFIG_LOAD", $sformatf("Cannot get() configuration %s from uvm_config_db. Have you set() it?", s_my_config_id))
+
+  return t;
+endfunction

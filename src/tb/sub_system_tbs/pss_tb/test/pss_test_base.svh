@@ -90,7 +90,7 @@ function void pss_test_base::build_phase(uvm_phase phase);
 
   // SPI Sub-env configuration:
   m_spi_env_cfg = spi_env_config::type_id::create("m_spi_env_cfg");
-  m_spi_env_cfg.m_reg_model = pss_rb.spi_rb;
+  m_spi_env_cfg.spi_rb = pss_rb.spi_rb;
 
   // apb agent in the SPI env:
 
@@ -101,7 +101,7 @@ function void pss_test_base::build_phase(uvm_phase phase);
   //if (!uvm_config_db #(virtual apb_driver_bfm) ::get(this, "", "APB_SPI_drv_bfm", m_spi_apb_agent_cfg.drv_bfm))
   //  `uvm_fatal("VIF CONFIG", "Cannot get() BFM interface APB_SPI_drv_bfm from uvm_config_db. Have you set() it?")
   m_spi_apb_agent_cfg.active = UVM_PASSIVE;
-  m_spi_env_cfg.m_apb_agent_config = m_spi_apb_agent_cfg;
+  m_spi_env_cfg.m_apb_agent_cfg = m_spi_apb_agent_cfg;
 
   // SPI agent:
   m_spi_agent_cfg = spi_agent_config::type_id::create("m_spi_agent_cfg");
@@ -109,7 +109,7 @@ function void pss_test_base::build_phase(uvm_phase phase);
     `uvm_fatal("VIF CONFIG", "Cannot get() BFM interface SPI_mon_bfm from uvm_config_db. Have you set() it?")
   if (!uvm_config_db #(virtual spi_driver_bfm) ::get(this, "", "SPI_drv_bfm", m_spi_agent_cfg.drv_bfm))
     `uvm_fatal("VIF CONFIG", "Cannot get() BFM interface SPI_drv_bfm from uvm_config_db. Have you set() it?")
-  m_spi_env_cfg.m_spi_agent_config = m_spi_agent_cfg;
+  m_spi_env_cfg.m_spi_agent_cfg = m_spi_agent_cfg;
   m_env_cfg.m_spi_env_cfg = m_spi_env_cfg;
   uvm_config_db #(spi_env_config)::set(this, "*", "spi_env_config", m_spi_env_cfg);
 

@@ -21,44 +21,62 @@
 //
 //
 class spi_monitor extends uvm_component;
-  // UVM Factory Registration Macro.
-  `uvm_component_utils(spi_monitor);
 
-  // Virtual Interface
-  local virtual spi_monitor_bfm m_bfm;
+// UVM Factory Registration Macro
+//
+`uvm_component_utils(spi_monitor);
 
-  // Handle to the agent's configuration object.
-  spi_agent_config m_config;
+// Virtual Interface
+local virtual spi_monitor_bfm m_bfm;
 
-  // Monitor's analysis port.
-  uvm_analysis_port #(spi_seq_item) seq_item_aport;
+//------------------------------------------
+// Data Members
+//------------------------------------------
+spi_agent_config m_cfg;
 
-  // Monitor's constructor.
-  function new(string name, uvm_component parent);
-    super.new(name, parent);
-  endfunction: new
+//------------------------------------------
+// Component Members
+//------------------------------------------
+uvm_analysis_port #(spi_seq_item) ap;
 
-  // Method used during build phase.
-  function void build_phase(uvm_phase phase);
-    super.build_phase(phase);
-    seq_item_aport = new("seq_item_aport", this);
-  endfunction
+//------------------------------------------
+// Methods
+//------------------------------------------
 
-  // Method used during connect phase.
-  function void connect_phase(uvm_phase phase);
-    super.connect_phase(phase);
-    m_bfm = m_config.mon_bfm;
-    m_bfm.proxy = this;
-  endfunction
+// Standard UVM Methods:
 
-  // Main task executed during run phase.
-  task run_phase(uvm_phase phase);
-    m_bfm.run();
-  endtask: run_phase
+extern function new(string name = "spi_monitor", uvm_component parent = null);
+extern function void build_phase(uvm_phase phase);
+extern task run_phase(uvm_phase phase);
+extern function void report_phase(uvm_phase phase);
 
-  // Proxy Methods:
-  function void notify_transaction(spi_seq_item item);
-    seq_item_aport.write(item);
-  endfunction
+// Proxy Methods:
+  
+extern function void notify_transaction(spi_seq_item item);
 
 endclass: spi_monitor
+
+function spi_monitor::new(string name = "spi_monitor", uvm_component parent = null);
+  super.new(name, parent);
+endfunction
+
+function void spi_monitor::build_phase(uvm_phase phase);
+  `get_config(spi_agent_config, m_cfg, "spi_agent_config")
+  m_bfm = m_cfg.mon_bfm;
+  m_bfm.proxy = this;
+  
+  ap = new("ap", this);
+endfunction: build_phase
+
+task spi_monitor::run_phase(uvm_phase phase);
+  m_bfm.run();
+endtask: run_phase
+
+function void spi_monitor::report_phase(uvm_phase phase);
+// Might be a good place to do some reporting on no of analysis transactions sent etc
+
+endfunction: report_phase
+
+function void spi_monitor::notify_transaction(spi_seq_item item);
+  ap.write(item);
+endfunction : notify_transaction

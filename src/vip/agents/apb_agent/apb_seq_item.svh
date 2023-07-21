@@ -16,38 +16,53 @@
 //   the License for the specific language governing
 //   permissions and limitations under the License.
 //------------------------------------------------------------
+// Questa recording macro:
 
+`define uvm_record_field(NAME,VALUE) \
+   $add_attribute(recorder.get_handle(),VALUE,NAME);
+
+//
+// Class Description:
+//
+//
 class apb_seq_item extends uvm_sequence_item;
-  // UVM Factory Registration Macro
-  `uvm_object_utils(apb_seq_item)
 
-  //------------------------------------------
-  // Data Members (Outputs rand, inputs non-rand)
-  //------------------------------------------
-  rand logic[31:0] addr;
-  rand logic[31:0] data;
-  rand logic we;
-  rand int delay;
+// UVM Factory Registration Macro
+//
+`uvm_object_utils(apb_seq_item)
 
-  bit error;
+//------------------------------------------
+// Data Members (Outputs rand, inputs non-rand)
+//------------------------------------------
+rand logic[31:0] addr;
+rand logic[31:0] data;
+rand logic we;
+rand int delay;
 
-  //------------------------------------------
-  // Constraints
-  //------------------------------------------
-  constraint addr_alignment {
-    addr[1:0] == 0;
-  }
+bit error;
 
-  constraint delay_bounds {
-    delay inside {[1:20]};
-  }
+//------------------------------------------
+// Constraints
+//------------------------------------------
+constraint addr_alignment {
+  addr[1:0] == 0;
+}
 
-  // Standard UVM Methods:
-  extern function new(string name = "apb_seq_item");
-  extern function void do_copy(uvm_object rhs);
-  extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
-  extern function string convert2string();
-  extern function void do_print(uvm_printer printer);
+constraint delay_bounds {
+  delay inside {[1:20]};
+}
+
+//------------------------------------------
+// Methods
+//------------------------------------------
+
+// Standard UVM Methods:
+extern function new(string name = "apb_seq_item");
+extern function void do_copy(uvm_object rhs);
+extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
+extern function string convert2string();
+extern function void do_print(uvm_printer printer);
+extern function void do_record(uvm_recorder recorder);
 
 endclass:apb_seq_item
 
@@ -98,3 +113,12 @@ function void apb_seq_item::do_print(uvm_printer printer);
   printer.m_string = convert2string();
 endfunction:do_print
 
+function void apb_seq_item:: do_record(uvm_recorder recorder);
+  super.do_record(recorder);
+
+  // Use the record macros to record the item fields:
+  `uvm_record_field("addr", addr)
+  `uvm_record_field("data", data)
+  `uvm_record_field("we", we)
+  `uvm_record_field("delay", delay)
+endfunction:do_record

@@ -17,19 +17,36 @@
 //   permissions and limitations under the License.
 //------------------------------------------------------------
 //
-
+// Class Description:
+//
+//
 class apb_write_seq extends uvm_sequence #(apb_seq_item);
-  // UVM Factory Registration Macro
-  `uvm_object_utils(apb_write_seq)
 
-  rand logic [31:0] addr;
-  rand logic [31:0] data;
+// UVM Factory Registration Macro
+//
+`uvm_object_utils(apb_write_seq)
 
-  // Standard UVM Methods:
-  extern function new(string name = "apb_write_seq");
-  extern task body;
+//------------------------------------------
+// Data Members (Outputs rand, inputs non-rand)
+//------------------------------------------
+rand logic [31:0] addr;
+rand logic [31:0] data;
 
-endclass: apb_write_seq
+//------------------------------------------
+// Constraints
+//------------------------------------------
+
+
+
+//------------------------------------------
+// Methods
+//------------------------------------------
+
+// Standard UVM Methods:
+extern function new(string name = "apb_write_seq");
+extern task body;
+
+endclass:apb_write_seq
 
 function apb_write_seq::new(string name = "apb_write_seq");
   super.new(name);
@@ -46,4 +63,4 @@ task apb_write_seq::body;
     finish_item(req);
   end
 
-endtask: body
+endtask:body

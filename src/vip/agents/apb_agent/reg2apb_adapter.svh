@@ -25,6 +25,7 @@
 // reg2apb_adapter
 //----------------------------------------------------------------------
 class reg2apb_adapter extends uvm_reg_adapter;
+
   // factory registration macro
   `uvm_object_utils(reg2apb_adapter)
 
@@ -81,3 +82,4 @@ class reg2apb_adapter extends uvm_reg_adapter;
   endfunction: bus2reg
 
 endclass: reg2apb_adapter
+

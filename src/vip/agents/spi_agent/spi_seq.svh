@@ -16,20 +16,40 @@
 //   the License for the specific language governing
 //   permissions and limitations under the License.
 //------------------------------------------------------------
-
+//
+// Class Description:
+//
+//
 class spi_seq extends uvm_sequence #(spi_seq_item);
-  // UVM Factory Registration Macro.
-  `uvm_object_utils(spi_seq)
 
-  // Standard UVM Methods:
-  extern function new(string name = "spi_seq");
-  extern task body;
+// UVM Factory Registration Macro
+//
+`uvm_object_utils(spi_seq)
 
-  endclass:spi_seq
+//------------------------------------------
+// Data Members (Outputs rand, inputs non-rand)
+//------------------------------------------
 
-  function spi_seq::new(string name = "spi_seq");
-    super.new(name);
-  endfunction
+
+//------------------------------------------
+// Constraints
+//------------------------------------------
+
+
+
+//------------------------------------------
+// Methods
+//------------------------------------------
+
+// Standard UVM Methods:
+extern function new(string name = "spi_seq");
+extern task body;
+
+endclass:spi_seq
+
+function spi_seq::new(string name = "spi_seq");
+  super.new(name);
+endfunction
 
 task spi_seq::body;
   spi_seq_item req;
@@ -42,9 +62,11 @@ task spi_seq::body;
     end
     finish_item(req);
   end
+
 endtask:body
 
 class spi_rand_seq extends uvm_sequence #(spi_seq_item);
+
   `uvm_object_utils(spi_rand_seq)
 
   function new(string name = "spi_rand_seq");

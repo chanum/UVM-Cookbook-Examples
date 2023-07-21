@@ -17,17 +17,34 @@
 //   permissions and limitations under the License.
 //------------------------------------------------------------
 //
-
+// Class Description:
+//
+//
 class apb_read_seq extends uvm_sequence #(apb_seq_item);
-  // UVM Factory Registration Macro
-  `uvm_object_utils(apb_read_seq)
 
-  rand logic [31:0] addr;
-  logic [31:0] data;
+// UVM Factory Registration Macro
+//
+`uvm_object_utils(apb_read_seq)
 
-  // Standard UVM Methods:
-  extern function new(string name = "apb_read_seq");
-  extern task body;
+//------------------------------------------
+// Data Members (Outputs rand, inputs non-rand)
+//------------------------------------------
+rand logic [31:0] addr;
+logic [31:0] data;
+
+//------------------------------------------
+// Constraints
+//------------------------------------------
+
+
+
+//------------------------------------------
+// Methods
+//------------------------------------------
+
+// Standard UVM Methods:
+extern function new(string name = "apb_read_seq");
+extern task body;
 
 endclass:apb_read_seq
 

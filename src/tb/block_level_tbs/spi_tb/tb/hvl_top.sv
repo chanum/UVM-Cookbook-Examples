@@ -18,18 +18,16 @@
 //------------------------------------------------------------
 
 module hvl_top;
-  `include "timescale.v"
-  import uvm_pkg::*;
-  import spi_test_lib_pkg::*;
 
-  // UVM initial block:
-  initial begin
-    // Configure some simulation options.
-    uvm_top.enable_print_topology = 1;
-    uvm_top.finish_on_completion  = 0;
-    
-    run_test();
-    $stop();
-  end
+`include "timescale.v"
+
+import uvm_pkg::*;
+import spi_test_lib_pkg::*;
+
+// UVM initial block:
+// run_test()
+initial begin
+  run_test();
+end
 
 endmodule: hvl_top

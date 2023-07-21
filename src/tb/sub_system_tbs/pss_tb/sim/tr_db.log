@@ -1,0 +1,1 @@
+  CREATE_STREAM @106000 {NAME:spi_transfer T:Transactions SCOPE:uvm_test_top.m_env.m_spi_env.m_spi_agent.m_sequencer STREAM:2060}

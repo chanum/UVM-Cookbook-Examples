@@ -155,7 +155,7 @@ class config_polling_test extends spi_vseq_base;
       spi_transfer.BITS = control[6:0];
       spi_transfer.rx_edge = control[9];
       fork
-        spi_transfer.start(spi);
+        spi_transfer.start(spi);      
       join_none
       go.start(m_sequencer);
       wait_unload.start(m_sequencer);
@@ -181,7 +181,7 @@ class register_test_vseq extends spi_vseq_base;
 
   task body;
     uvm_reg_hw_reset_seq reg_seq = uvm_reg_hw_reset_seq::type_id::create("reg_seq");
-    reg_seq.model = m_cfg.m_reg_model;
+    reg_seq.model = m_cfg.spi_rb;
 
     super.body;
     reg_seq.start(m_sequencer);
