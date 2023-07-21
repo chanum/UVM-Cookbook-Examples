@@ -1,15 +1,18 @@
 # QuestaSim Script
 
-# IMPORTANT set UVM path!
+# IMPORTANT set YOUR QUESTA_HOME path!
 set QUESTA_HOME C:/fpga/questasim_10.7c
-set UVM_HOME    ${QUESTA_HOME}/verilog_src/uvm-1.2
 
+set UVM_HOME    ${QUESTA_HOME}/verilog_src/uvm-1.2
 set BLOCK_TB    ../../../block_level_tbs
 set RTL         ../../../../rtl
 set AGENTS      ../../../../vip/agents
 set UTILS       ../../../../vip/utils
 
-set TEST pss_spi_interrupt_test
+# set TEST pss_spi_interrupt_test
+set TEST pss_spi_polling_test
+# set TEST pss_gpio_outputs_test
+# set TEST pss_test
 
 quit -sim
 catch {file delete -force work}
