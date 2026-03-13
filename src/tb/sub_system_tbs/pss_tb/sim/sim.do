@@ -10,9 +10,9 @@ set AGENTS      ../../../../vip/agents
 set UTILS       ../../../../vip/utils
 
 # set TEST pss_spi_interrupt_test
-set TEST pss_spi_polling_test
+# set TEST pss_spi_polling_test
 # set TEST pss_gpio_outputs_test
-# set TEST pss_test
+set TEST pss_test
 
 quit -sim
 catch {file delete -force work}
@@ -83,6 +83,6 @@ vlog -timescale 1ns/10ps +incdir+${RTL}/gpio/rtl/verilog ../tb/hvl_top.sv -times
 vlog -timescale 1ns/10ps +incdir+${RTL}/gpio/rtl/verilog ../tb/hdl_top.sv -timescale 1ns/10ps
 
 # SIM
-vsim -c -do "run -all" hvl_top hdl_top +UVM_TESTNAME=${TEST} -suppress 8887
+vsim -c -do "run -all; quit -f" hvl_top hdl_top +UVM_TESTNAME=${TEST} -suppress 8887
 
 # coverage report -detail
