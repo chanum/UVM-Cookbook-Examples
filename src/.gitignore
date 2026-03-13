@@ -9,3 +9,6 @@ _*
 transcript*
 VRMDATA
 vrmhtmlreport
+tr_db.log
+test_output.log
+*.log
