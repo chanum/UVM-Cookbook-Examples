@@ -9,10 +9,10 @@ set RTL         ../../../../rtl
 set AGENTS      ../../../../vip/agents
 set UTILS       ../../../../vip/utils
 
-# set TEST pss_spi_interrupt_test
-# set TEST pss_spi_polling_test
-# set TEST pss_gpio_outputs_test
-set TEST pss_test
+# Default test - only set if not already defined
+if ![info exists TEST] {
+    set TEST pss_test
+}
 
 quit -sim
 catch {file delete -force work}
